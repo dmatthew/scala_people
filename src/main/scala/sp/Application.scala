@@ -94,6 +94,20 @@ object Application {
   def promptRemovePerson(): Unit = {
     println("You chose to remove a person!")
     val name = readLine("Name of person to remove: ")
+
+    Class.forName("org.postgresql.Driver").newInstance
+    val connection_string = "jdbc:postgresql://192.168.41.20/scala_people?user=postgres&password=password"
+    val conn:Connection = DriverManager.getConnection(connection_string)
+    val deleteQuery: String = "DELETE FROM people WHERE name = ?";
+    try {
+      val deleteStatement = conn.prepareStatement(deleteQuery)
+      deleteStatement.setString(1, name)
+      deleteStatement.executeUpdate
+    } catch {
+      case e: Throwable => println("Error: " + e)
+    } finally {
+      conn.close
+    }
   }
 
   def promptListPeople(): Unit = {
