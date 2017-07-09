@@ -69,6 +69,26 @@ object Application {
     val name = readLine("Name: ")
     val age = readLine("Age: ")
     val occupation = readLine("Occupation: ")
+
+    Class.forName("org.postgresql.Driver").newInstance
+    val connection_string = "jdbc:postgresql://192.168.41.20/scala_people?user=postgres&password=password"
+    val conn:Connection = DriverManager.getConnection(connection_string)
+    val insertQuery: String = "INSERT INTO people (" +
+      " name," +
+      " age," +
+      " occupation ) VALUES (" +
+      " ?, ?, ?)";
+    try {
+      val insertStatement = conn.prepareStatement(insertQuery)
+      insertStatement.setString(1, name)
+      insertStatement.setInt(2, age.toInt)
+      insertStatement.setString(3, occupation)
+      insertStatement.executeUpdate
+    } catch {
+      case e: Throwable => println("Error: " + e)
+    } finally {
+      conn.close
+    }
   }
 
   def promptRemovePerson(): Unit = {
