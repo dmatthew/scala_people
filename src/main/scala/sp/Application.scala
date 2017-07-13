@@ -24,9 +24,7 @@ object Application {
     try {
       val statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val dbCheckResult = statement.executeQuery("select datname from pg_catalog.pg_database where datname='scala_people'")
-      if (!dbCheckResult.next) {
-        val createDbResult = statement.executeUpdate("CREATE DATABASE scala_people")
-      }
+      if (!dbCheckResult.next) statement.executeUpdate("CREATE DATABASE scala_people")
     } catch {
       case e: Throwable => println("Error: " + e)
     } finally {
@@ -43,7 +41,7 @@ object Application {
     val conn:Connection = DriverManager.getConnection(connection_string)
     try {
       val statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
-      val result = statement.executeUpdate("CREATE TABLE IF NOT EXISTS people (id serial primary key, name VARCHAR(255), age int, occupation VARCHAR(255))")
+      statement.executeUpdate("CREATE TABLE IF NOT EXISTS people (id serial primary key, name VARCHAR(255), age int, occupation VARCHAR(255))")
     } catch {
       case e: Throwable => println("Could not connect")
     } finally {
@@ -52,12 +50,12 @@ object Application {
   }
 
   def showChoices(): Unit = {
-  readLine("What would you like to do? [Add, Remove, List, Quit]: ") match {
-      case "Add" | "add" | "a" => promptAddPerson; showChoices
-      case "Remove" | "remove" | "r" => promptRemovePerson; showChoices
-      case "List" | "list" | "l" => promptListPeople; showChoices
-      case "Quit" | "quit" | "q" => println("Goodbye!")
-      case _ =>   println("Invalid choice"); showChoices
+    readLine("What would you like to do? [Add, Remove, List, Quit]: ") match {
+      case "Add" | "add" | "A" | "a" => promptAddPerson; showChoices
+      case "Remove" | "remove" | "R" | "r" => promptRemovePerson; showChoices
+      case "List" | "list" | "L" | "l" => promptListPeople; showChoices
+      case "Quit" | "quit" | "Q" | "q" => println("Goodbye!")
+      case _ => println("Invalid choice"); showChoices
     }
   }
 
@@ -116,9 +114,7 @@ object Application {
     try {
       val statement = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)
       val result = statement.executeQuery("SELECT * FROM people")
-      if (!result.isBeforeFirst) {
-        println("There are no people to list")
-      }
+      if (!result.isBeforeFirst) println("There are no people to list")
       else {
         while (result.next) {
           println(result.getString("name").padTo(20, ' ') + " | " + result.getString("age").padTo(3, ' ') + " | " + result.getString("occupation"))
