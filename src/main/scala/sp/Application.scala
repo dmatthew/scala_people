@@ -52,15 +52,12 @@ object Application {
   }
 
   def showChoices(): Unit = {
-    val userCommand = readLine("What would you like to do? [Add, Remove, List]: ")
-    userCommand match {
-      case "add" => promptAddPerson
-      case "remove" => promptRemovePerson
-      case "list" => promptListPeople
-      case _ => {
-        println("Invalid choice")
-        showChoices
-      }
+  readLine("What would you like to do? [Add, Remove, List, Quit]: ") match {
+      case "Add" | "add" | "a" => promptAddPerson; showChoices
+      case "Remove" | "remove" | "r" => promptRemovePerson; showChoices
+      case "List" | "list" | "l" => promptListPeople; showChoices
+      case "Quit" | "quit" | "q" => println("Goodbye!")
+      case _ =>   println("Invalid choice"); showChoices
     }
   }
 
