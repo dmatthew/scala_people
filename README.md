@@ -19,3 +19,8 @@ $ sbt
 [info] Set current project to Scala People (in build file:/vagrant/)
 > run
 ```
+
+## Tech Stack
+
+* Scala
+* PostgreSQL
