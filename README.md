@@ -23,4 +23,5 @@ $ sbt
 ## Tech Stack
 
 * Scala
+* sbt
 * PostgreSQL
