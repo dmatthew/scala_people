@@ -13,15 +13,12 @@ $ vagrant up
 
 ```
 $ vagrant ssh web
-$ cd /vagrant
-$ sbt
-[info] Loading project definition from /vagrant/project
-[info] Set current project to Scala People (in build file:/vagrant/)
-> run
+$ cd /vagrant/play_test/scala-people
+$ sbt run
 ```
 
 ## Tech Stack
 
 * Scala
 * sbt
-* PostgreSQL
+* MongoDB

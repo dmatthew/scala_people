@@ -10,5 +10,5 @@ default_attributes(
 run_list(
     'recipe[scala-web::default]',
     #'recipe[scala::default]', # To install scala without sbt
-    'recipe[postgresql::client]'
+    #'recipe[postgresql::client]'
 )
