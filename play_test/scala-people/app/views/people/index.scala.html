@@ -1,1 +1,21 @@
+@(people: List[models.Person])
+
 <h1>All People</h1>
+
+<h2>@people</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Occupation</th>
+  </tr>
+
+  @people.map { person =>
+    <tr>
+      <td>@person.name</td>
+      <td>@person.age</td>
+      <td>@person.occupation</td>
+    </tr>
+  }
+</table>
